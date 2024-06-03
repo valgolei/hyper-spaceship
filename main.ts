@@ -1,4 +1,13 @@
+namespace SpriteKind {
+    export const tir_vaisseau = SpriteKind.create()
+}
+sprites.onOverlap(SpriteKind.tir_vaisseau, SpriteKind.Enemy, function (sprite, otherSprite) {
+    Vie.value += -1
+    sprites.destroy(sprite)
+})
 let Tir_vaisseau: Sprite = null
+let énemi_basique: Sprite = null
+let Vie: StatusBarSprite = null
 let Vaisseau = sprites.create(img`
     . . . . . f . . . . . 
     . . . f . f . f . . . 
@@ -16,11 +25,31 @@ let Vaisseau = sprites.create(img`
     . 4 4 4 . . . 4 4 4 . 
     5 5 5 5 5 . 5 5 5 5 5 
     `, SpriteKind.Player)
-controller.moveSprite(Vaisseau, 100, 100)
+controller.moveSprite(Vaisseau, 90, 90)
 Vaisseau.setStayInScreen(true)
 scene.setBackgroundColor(12)
 Vaisseau.setPosition(80, 85)
-game.onUpdateInterval(70, function () {
+Vie = statusbars.create(50, 1, StatusBarKind.Health)
+Vie.setPosition(27, 118)
+let spaw_des_énemis_basiques = 0
+forever(function () {
+	
+})
+forever(function () {
+    if (spaw_des_énemis_basiques > 6000) {
+        spaw_des_énemis_basiques = 0
+        énemi_basique = sprites.create(img`
+            . d d d d d . 
+            d d d 7 d d d 
+            d . d 7 d . d 
+            . . d 7 d . . 
+            . d d d d d . 
+            . . d f d . . 
+            . . . f . . . 
+            `, SpriteKind.Enemy)
+    }
+})
+game.onUpdateInterval(100, function () {
     Tir_vaisseau = sprites.createProjectileFromSprite(img`
         2 
         2 
@@ -29,4 +58,49 @@ game.onUpdateInterval(70, function () {
         2 
         `, Vaisseau, 0, -100)
     Tir_vaisseau.setPosition(Vaisseau.x, Vaisseau.y - 11)
+    Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
+    Tir_vaisseau.setFlag(SpriteFlag.AutoDestroy, true)
+    Tir_vaisseau = sprites.createProjectileFromSprite(img`
+        2 
+        2 
+        2 
+        2 
+        2 
+        `, Vaisseau, 0, -100)
+    Tir_vaisseau.setPosition(Vaisseau.x - 2, Vaisseau.y - 10)
+    Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
+    Tir_vaisseau.setFlag(SpriteFlag.AutoDestroy, true)
+    Tir_vaisseau = sprites.createProjectileFromSprite(img`
+        2 
+        2 
+        2 
+        2 
+        2 
+        `, Vaisseau, 0, -100)
+    Tir_vaisseau.setPosition(Vaisseau.x + 2, Vaisseau.y - 10)
+    Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
+    Tir_vaisseau.setFlag(SpriteFlag.AutoDestroy, true)
+    Tir_vaisseau = sprites.createProjectileFromSprite(img`
+        2 
+        2 
+        2 
+        2 
+        2 
+        `, Vaisseau, 0, -100)
+    Tir_vaisseau.setPosition(Vaisseau.x - 4, Vaisseau.y - 8)
+    Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
+    Tir_vaisseau.setFlag(SpriteFlag.AutoDestroy, true)
+    Tir_vaisseau = sprites.createProjectileFromSprite(img`
+        2 
+        2 
+        2 
+        2 
+        2 
+        `, Vaisseau, 0, -100)
+    Tir_vaisseau.setPosition(Vaisseau.x + 4, Vaisseau.y - 8)
+    Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
+    Tir_vaisseau.setFlag(SpriteFlag.AutoDestroy, true)
+})
+game.onUpdateInterval(100, function () {
+    spaw_des_énemis_basiques += 100
 })
