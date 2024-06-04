@@ -4,6 +4,7 @@ namespace SpriteKind {
 }
 statusbars.onZero(StatusBarKind.EnemyHealth, function (status) {
     sprites.destroy(status.spriteAttachedTo())
+    niveau_de_tir += 1
 })
 sprites.onOverlap(SpriteKind.tir_énemi, SpriteKind.Player, function (sprite, otherSprite) {
     sprites.destroy(sprite)
@@ -18,6 +19,8 @@ let tir_énemi_basique: Sprite = null
 let vie_énemi_basique: StatusBarSprite = null
 let énemi_basique: Sprite = null
 let Vie: StatusBarSprite = null
+let niveau_de_tir = 1
+effects.starField.startScreenEffect()
 let Vaisseau = sprites.create(img`
     . . . . . f . . . . . 
     . . . f . f . f . . . 
@@ -88,33 +91,240 @@ forever(function () {
     }
 })
 game.onUpdateInterval(100, function () {
-    Tir_vaisseau = sprites.createProjectileFromSprite(img`
-        2 
-        2 
-        2 
-        2 
-        2 
-        `, Vaisseau, 0, -120)
-    Tir_vaisseau.setPosition(Vaisseau.x, Vaisseau.y - 11)
-    Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
-    Tir_vaisseau = sprites.createProjectileFromSprite(img`
-        2 
-        2 
-        2 
-        2 
-        2 
-        `, Vaisseau, 0, -120)
-    Tir_vaisseau.setPosition(Vaisseau.x - 2, Vaisseau.y - 10)
-    Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
-    Tir_vaisseau = sprites.createProjectileFromSprite(img`
-        2 
-        2 
-        2 
-        2 
-        2 
-        `, Vaisseau, 0, -120)
-    Tir_vaisseau.setPosition(Vaisseau.x + 2, Vaisseau.y - 10)
-    Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
+    if (niveau_de_tir == 1) {
+        Tir_vaisseau = sprites.createProjectileFromSprite(img`
+            2 
+            2 
+            2 
+            2 
+            2 
+            `, Vaisseau, 0, -120)
+        Tir_vaisseau.setPosition(Vaisseau.x, Vaisseau.y - 11)
+        Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
+    }
+    if (niveau_de_tir == 2) {
+        Tir_vaisseau = sprites.createProjectileFromSprite(img`
+            2 
+            2 
+            2 
+            2 
+            2 
+            `, Vaisseau, 0, -120)
+        Tir_vaisseau.setPosition(Vaisseau.x - 2, Vaisseau.y - 10)
+        Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
+        Tir_vaisseau = sprites.createProjectileFromSprite(img`
+            2 
+            2 
+            2 
+            2 
+            2 
+            `, Vaisseau, 0, -120)
+        Tir_vaisseau.setPosition(Vaisseau.x + 2, Vaisseau.y - 10)
+        Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
+    }
+    if (niveau_de_tir == 3) {
+        Tir_vaisseau = sprites.createProjectileFromSprite(img`
+            2 
+            2 
+            2 
+            2 
+            2 
+            `, Vaisseau, 0, -120)
+        Tir_vaisseau.setPosition(Vaisseau.x, Vaisseau.y - 11)
+        Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
+        Tir_vaisseau = sprites.createProjectileFromSprite(img`
+            2 
+            2 
+            2 
+            2 
+            2 
+            `, Vaisseau, 0, -120)
+        Tir_vaisseau.setPosition(Vaisseau.x - 2, Vaisseau.y - 10)
+        Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
+        Tir_vaisseau = sprites.createProjectileFromSprite(img`
+            2 
+            2 
+            2 
+            2 
+            2 
+            `, Vaisseau, 0, -120)
+        Tir_vaisseau.setPosition(Vaisseau.x + 2, Vaisseau.y - 10)
+        Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
+    }
+    if (niveau_de_tir == 4) {
+        Tir_vaisseau = sprites.createProjectileFromSprite(img`
+            5 
+            5 
+            5 
+            5 
+            5 
+            `, Vaisseau, 0, -120)
+        Tir_vaisseau.setPosition(Vaisseau.x, Vaisseau.y - 11)
+        Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
+        Tir_vaisseau = sprites.createProjectileFromSprite(img`
+            2 
+            2 
+            2 
+            2 
+            2 
+            `, Vaisseau, 0, -120)
+        Tir_vaisseau.setPosition(Vaisseau.x - 2, Vaisseau.y - 10)
+        Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
+        Tir_vaisseau = sprites.createProjectileFromSprite(img`
+            2 
+            2 
+            2 
+            2 
+            2 
+            `, Vaisseau, 0, -120)
+        Tir_vaisseau.setPosition(Vaisseau.x + 2, Vaisseau.y - 10)
+        Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
+    }
+    if (niveau_de_tir == 5) {
+        Tir_vaisseau = sprites.createProjectileFromSprite(img`
+            2 
+            2 
+            2 
+            2 
+            2 
+            `, Vaisseau, 0, -120)
+        Tir_vaisseau.setPosition(Vaisseau.x, Vaisseau.y - 11)
+        Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
+        Tir_vaisseau = sprites.createProjectileFromSprite(img`
+            5 
+            5 
+            5 
+            5 
+            5 
+            `, Vaisseau, 0, -120)
+        Tir_vaisseau.setPosition(Vaisseau.x - 2, Vaisseau.y - 10)
+        Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
+        Tir_vaisseau = sprites.createProjectileFromSprite(img`
+            5 
+            5 
+            5 
+            5 
+            5 
+            `, Vaisseau, 0, -120)
+        Tir_vaisseau.setPosition(Vaisseau.x + 2, Vaisseau.y - 10)
+        Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
+    }
+    if (niveau_de_tir == 6) {
+        Tir_vaisseau = sprites.createProjectileFromSprite(img`
+            5 
+            5 
+            5 
+            5 
+            5 
+            `, Vaisseau, 0, -120)
+        Tir_vaisseau.setPosition(Vaisseau.x, Vaisseau.y - 11)
+        Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
+        Tir_vaisseau = sprites.createProjectileFromSprite(img`
+            5 
+            5 
+            5 
+            5 
+            5 
+            `, Vaisseau, 0, -120)
+        Tir_vaisseau.setPosition(Vaisseau.x - 2, Vaisseau.y - 10)
+        Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
+        Tir_vaisseau = sprites.createProjectileFromSprite(img`
+            5 
+            5 
+            5 
+            5 
+            5 
+            `, Vaisseau, 0, -120)
+        Tir_vaisseau.setPosition(Vaisseau.x + 2, Vaisseau.y - 10)
+        Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
+    }
+    if (niveau_de_tir == 7) {
+        Tir_vaisseau = sprites.createProjectileFromSprite(img`
+            f 
+            f 
+            f 
+            f 
+            f 
+            `, Vaisseau, 0, -120)
+        Tir_vaisseau.setPosition(Vaisseau.x, Vaisseau.y - 11)
+        Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
+        Tir_vaisseau = sprites.createProjectileFromSprite(img`
+            5 
+            5 
+            5 
+            5 
+            5 
+            `, Vaisseau, 0, -120)
+        Tir_vaisseau.setPosition(Vaisseau.x - 2, Vaisseau.y - 10)
+        Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
+        Tir_vaisseau = sprites.createProjectileFromSprite(img`
+            5 
+            5 
+            5 
+            5 
+            5 
+            `, Vaisseau, 0, -120)
+        Tir_vaisseau.setPosition(Vaisseau.x + 2, Vaisseau.y - 10)
+        Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
+    }
+    if (niveau_de_tir == 8) {
+        Tir_vaisseau = sprites.createProjectileFromSprite(img`
+            5 
+            5 
+            5 
+            5 
+            5 
+            `, Vaisseau, 0, -120)
+        Tir_vaisseau.setPosition(Vaisseau.x, Vaisseau.y - 11)
+        Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
+        Tir_vaisseau = sprites.createProjectileFromSprite(img`
+            f 
+            f 
+            f 
+            f 
+            f 
+            `, Vaisseau, 0, -120)
+        Tir_vaisseau.setPosition(Vaisseau.x - 2, Vaisseau.y - 10)
+        Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
+        Tir_vaisseau = sprites.createProjectileFromSprite(img`
+            f 
+            f 
+            f 
+            f 
+            f 
+            `, Vaisseau, 0, -120)
+        Tir_vaisseau.setPosition(Vaisseau.x + 2, Vaisseau.y - 10)
+        Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
+    }
+    if (niveau_de_tir < 8) {
+        Tir_vaisseau = sprites.createProjectileFromSprite(img`
+            f 
+            f 
+            f 
+            f 
+            f 
+            `, Vaisseau, 0, -120)
+        Tir_vaisseau.setPosition(Vaisseau.x, Vaisseau.y - 11)
+        Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
+        Tir_vaisseau = sprites.createProjectileFromSprite(img`
+            f 
+            f 
+            f 
+            f 
+            f 
+            `, Vaisseau, 0, -120)
+        Tir_vaisseau.setPosition(Vaisseau.x - 2, Vaisseau.y - 10)
+        Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
+        Tir_vaisseau = sprites.createProjectileFromSprite(img`
+            f 
+            f 
+            f 
+            f 
+            f 
+            `, Vaisseau, 0, -120)
+        Tir_vaisseau.setPosition(Vaisseau.x + 2, Vaisseau.y - 10)
+        Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
+    }
 })
 game.onUpdateInterval(100, function () {
     spaw_des_énemis_basiques += 100
