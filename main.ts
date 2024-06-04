@@ -296,7 +296,7 @@ game.onUpdateInterval(100, function () {
         Tir_vaisseau.setPosition(Vaisseau.x + 2, Vaisseau.y - 10)
         Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
     }
-    if (niveau_de_tir < 8) {
+    if (niveau_de_tir > 8) {
         Tir_vaisseau = sprites.createProjectileFromSprite(img`
             f 
             f 
