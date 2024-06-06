@@ -12,23 +12,6 @@ statusbars.onZero(StatusBarKind.Health, function (status) {
     pause(1000)
     game.gameOver(false)
 })
-function spwan_énemi_basique () {
-    énemis_restants += 1
-    énemi_basique = sprites.create(img`
-        . d d d d d . 
-        d d d 7 d d d 
-        d . d 7 d . d 
-        . . d 7 d . . 
-        . d d d d d . 
-        . . d f d . . 
-        . . . f . . . 
-        `, SpriteKind.Enemy)
-    énemi_basique.setPosition(randint(5, 155), 10)
-    vie_énemi_basique = statusbars.create(9, 1, StatusBarKind.EnemyHealth)
-    vie_énemi_basique.attachToSprite(énemi_basique, 2, 0)
-    vie_énemi_basique.max = 100
-    énemi_basique.setStayInScreen(true)
-}
 sprites.onOverlap(SpriteKind.tir_énemi, SpriteKind.Player, function (sprite, otherSprite) {
     sprites.destroy(sprite)
     Vie.value += -10
@@ -38,152 +21,6 @@ sprites.onOverlap(SpriteKind.tir_vaisseau, SpriteKind.Enemy, function (sprite, o
     statusbars.getStatusBarAttachedTo(StatusBarKind.EnemyHealth, otherSprite).value += -5 - force_de_tir
     sprites.destroy(sprite)
 })
-function Amélioration () {
-    amélioration_des_tirs = sprites.create(img`
-        . . 2 . . . . . . 
-        . 2 2 2 . . . . . 
-        . 2 2 2 . . . . . 
-        2 2 2 2 2 . . f . 
-        2 2 2 2 2 . f f f 
-        2 2 2 2 2 . . f . 
-        2 2 2 2 2 . . . . 
-        2 2 2 2 2 . . . . 
-        2 2 2 2 2 . . . . 
-        `, SpriteKind.titre)
-    amélioration_des_tirs.setPosition(20, 60)
-    force = sprites.create(img`
-        . . . . . . . 5 5 
-        . . . . . . 5 5 5 
-        . . . . . 5 5 5 . 
-        . . . . 5 5 5 . . 
-        f . . 5 5 5 . . . 
-        . f 5 5 5 . . . . 
-        . . f 5 . . . . . 
-        . f . f . . . . . 
-        f . . . f . . . . 
-        `, SpriteKind.titre)
-    force.setPosition(40, 60)
-    robustesse = sprites.create(img`
-        . . 2 . . . 2 . . 
-        . 2 2 2 . 2 2 2 . 
-        2 2 2 2 2 2 2 2 2 
-        2 2 2 2 f 2 2 2 2 
-        2 2 2 f f f 2 2 2 
-        . 2 2 2 f 2 2 2 . 
-        . . 2 2 2 2 2 . . 
-        . . . 2 2 2 . . . 
-        . . . . 2 . . . . 
-        `, SpriteKind.titre)
-    robustesse.setPosition(60, 60)
-    while (xp_points != 0) {
-        pause(1)
-        if (Vaisseau.overlapsWith(amélioration_des_tirs)) {
-            animation.runImageAnimation(
-            amélioration_des_tirs,
-            [img`
-                . . 7 . . . . . . 
-                . 7 7 7 . . . . . 
-                . 7 7 7 . . . . . 
-                7 7 7 7 7 . . 7 . 
-                7 7 7 7 7 . 7 7 7 
-                7 7 7 7 7 . . 7 . 
-                7 7 7 7 7 . . . . 
-                7 7 7 7 7 . . . . 
-                7 7 7 7 7 . . . . 
-                `],
-            500,
-            false
-            )
-        } else {
-            animation.runImageAnimation(
-            amélioration_des_tirs,
-            [img`
-                . . 2 . . . . . . 
-                . 2 2 2 . . . . . 
-                . 2 2 2 . . . . . 
-                2 2 2 2 2 . . f . 
-                2 2 2 2 2 . f f f 
-                2 2 2 2 2 . . f . 
-                2 2 2 2 2 . . . . 
-                2 2 2 2 2 . . . . 
-                2 2 2 2 2 . . . . 
-                `],
-            500,
-            false
-            )
-        }
-        if (Vaisseau.overlapsWith(force)) {
-            animation.runImageAnimation(
-            force,
-            [img`
-                . . . . . . . 7 7 
-                . . . . . . 7 7 7 
-                . . . . . 7 7 7 . 
-                . . . . 7 7 7 . . 
-                7 . . 7 7 7 . . . 
-                . 7 7 7 7 . . . . 
-                . . 7 7 . . . . . 
-                . 7 . 7 . . . . . 
-                7 . . . 7 . . . . 
-                `],
-            500,
-            false
-            )
-        } else {
-            animation.runImageAnimation(
-            force,
-            [img`
-                . . . . . . . 5 5 
-                . . . . . . 5 5 5 
-                . . . . . 5 5 5 . 
-                . . . . 5 5 5 . . 
-                f . . 5 5 5 . . . 
-                . f 5 5 5 . . . . 
-                . . f 5 . . . . . 
-                . f . f . . . . . 
-                f . . . f . . . . 
-                `],
-            500,
-            false
-            )
-        }
-        if (Vaisseau.overlapsWith(robustesse)) {
-            animation.runImageAnimation(
-            robustesse,
-            [img`
-                . . 7 . . . 7 . . 
-                . 7 7 7 . 7 7 7 . 
-                7 7 7 7 7 7 7 7 7 
-                7 7 7 7 f 7 7 7 7 
-                7 7 7 f f f 7 7 7 
-                . 7 7 7 f 7 7 7 . 
-                . . 7 7 7 7 7 . . 
-                . . . 7 7 7 . . . 
-                . . . . 7 . . . . 
-                `],
-            500,
-            false
-            )
-        } else {
-            animation.runImageAnimation(
-            robustesse,
-            [img`
-                . . 2 . . . 2 . . 
-                . 2 2 2 . 2 2 2 . 
-                2 2 2 2 2 2 2 2 2 
-                2 2 2 2 f 2 2 2 2 
-                2 2 2 f f f 2 2 2 
-                . 2 2 2 f 2 2 2 . 
-                . . 2 2 2 2 2 . . 
-                . . . 2 2 2 . . . 
-                . . . . 2 . . . . 
-                `],
-            500,
-            false
-            )
-        }
-    }
-}
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     otherSprite.y += -10
     Vie.value += -5
@@ -191,16 +28,12 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
 })
 let Tir_vaisseau: Sprite = null
 let tir_énemi_basique: Sprite = null
-let robustesse: Sprite = null
-let force: Sprite = null
-let amélioration_des_tirs: Sprite = null
 let vie_énemi_basique: StatusBarSprite = null
 let énemi_basique: Sprite = null
 let énemis_restants = 0
 let Vie: StatusBarSprite = null
 let Vaisseau: Sprite = null
-let xp_points = 0
-xp_points = 1
+let xp_points = 1
 let niveau_de_tir = 3
 effects.starField.startScreenEffect()
 Vaisseau = sprites.create(img`
@@ -233,7 +66,29 @@ game.onUpdateInterval(1000, function () {
     }
 })
 forever(function () {
-    Amélioration()
+    if (spaw_des_énemis_basiques > 2000) {
+        spaw_des_énemis_basiques = 0
+        énemis_restants += 1
+        énemi_basique = sprites.create(img`
+            . d d d d d . 
+            d d d 7 d d d 
+            d . d 7 d . d 
+            . . d 7 d . . 
+            . d d d d d . 
+            . . d f d . . 
+            . . . f . . . 
+            `, SpriteKind.Enemy)
+        énemi_basique.setPosition(randint(5, 155), 10)
+        vie_énemi_basique = statusbars.create(9, 1, StatusBarKind.EnemyHealth)
+        vie_énemi_basique.attachToSprite(énemi_basique, 2, 0)
+        vie_énemi_basique.max = 100
+        énemi_basique.setStayInScreen(true)
+    }
+    for (let valeur of sprites.allOfKind(SpriteKind.Enemy)) {
+        if (valeur.y > 117) {
+            sprites.destroy(valeur)
+        }
+    }
 })
 forever(function () {
     pause(2000)
