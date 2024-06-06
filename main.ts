@@ -3,7 +3,13 @@ namespace SpriteKind {
     export const tir_énemi = SpriteKind.create()
     export const titre = SpriteKind.create()
 }
+statusbars.onStatusReached(StatusBarKind.Magic, statusbars.StatusComparison.EQ, statusbars.ComparisonType.Percentage, 100, function (status) {
+    xp_points.value = 0
+    niveau_de_tir += 1
+})
 statusbars.onZero(StatusBarKind.EnemyHealth, function (status) {
+    info.changeScoreBy(3)
+    xp_points.value += 3
     sprites.destroy(status.spriteAttachedTo())
     énemis_restants += -1
 })
@@ -17,8 +23,7 @@ sprites.onOverlap(SpriteKind.tir_énemi, SpriteKind.Player, function (sprite, ot
     Vie.value += -10
 })
 sprites.onOverlap(SpriteKind.tir_vaisseau, SpriteKind.Enemy, function (sprite, otherSprite) {
-    let force_de_tir = 0
-    statusbars.getStatusBarAttachedTo(StatusBarKind.EnemyHealth, otherSprite).value += -5 - force_de_tir
+    statusbars.getStatusBarAttachedTo(StatusBarKind.EnemyHealth, otherSprite).value += -5 - niveau_de_tir
     sprites.destroy(sprite)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
@@ -31,10 +36,11 @@ let tir_énemi_basique: Sprite = null
 let vie_énemi_basique: StatusBarSprite = null
 let énemi_basique: Sprite = null
 let énemis_restants = 0
+let xp_points: StatusBarSprite = null
 let Vie: StatusBarSprite = null
 let Vaisseau: Sprite = null
-let xp_points = 1
-let niveau_de_tir = 3
+let niveau_de_tir = 0
+niveau_de_tir = 1
 effects.starField.startScreenEffect()
 Vaisseau = sprites.create(img`
     . . . . . f . . . . . 
@@ -60,13 +66,18 @@ Vaisseau.setPosition(80, 85)
 Vie = statusbars.create(50, 1, StatusBarKind.Health)
 Vie.setPosition(27, 118)
 let spaw_des_énemis_basiques = 0
+xp_points = statusbars.create(20, 4, StatusBarKind.Magic)
+xp_points.setColor(9, 15)
+xp_points.setPosition(12, 4)
+xp_points.max = 30
+xp_points.value = 0
 game.onUpdateInterval(1000, function () {
     for (let valeur of sprites.allOfKind(SpriteKind.Enemy)) {
         valeur.setVelocity(randint(-10, 10), randint(0, 3))
     }
 })
 forever(function () {
-    if (spaw_des_énemis_basiques > 2000) {
+    if (spaw_des_énemis_basiques > 3000) {
         spaw_des_énemis_basiques = 0
         énemis_restants += 1
         énemi_basique = sprites.create(img`
@@ -78,8 +89,9 @@ forever(function () {
             . . d f d . . 
             . . . f . . . 
             `, SpriteKind.Enemy)
-        énemi_basique.setPosition(randint(5, 155), 10)
+        énemi_basique.setPosition(randint(5, 155), 0)
         vie_énemi_basique = statusbars.create(9, 1, StatusBarKind.EnemyHealth)
+        vie_énemi_basique.setColor(2, 15)
         vie_énemi_basique.attachToSprite(énemi_basique, 2, 0)
         vie_énemi_basique.max = 100
         énemi_basique.setStayInScreen(true)
@@ -87,6 +99,7 @@ forever(function () {
     for (let valeur of sprites.allOfKind(SpriteKind.Enemy)) {
         if (valeur.y > 117) {
             sprites.destroy(valeur)
+            énemis_restants += -1
         }
     }
 })
@@ -143,7 +156,7 @@ game.onUpdateInterval(100, function () {
         Tir_vaisseau.setPosition(Vaisseau.x + 2, Vaisseau.y - 10)
         Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
     }
-    if (niveau_de_tir == 3) {
+    if (niveau_de_tir >= 3) {
         Tir_vaisseau = sprites.createProjectileFromSprite(img`
             2 
             2 
