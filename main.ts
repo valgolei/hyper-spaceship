@@ -77,7 +77,7 @@ game.onUpdateInterval(1000, function () {
     }
 })
 forever(function () {
-    if (spaw_des_énemis_basiques > 3000) {
+    if (spaw_des_énemis_basiques > 6000 / (1 + info.score() / 100)) {
         spaw_des_énemis_basiques = 0
         énemis_restants += 1
         énemi_basique = sprites.create(img`
@@ -143,7 +143,7 @@ game.onUpdateInterval(100, function () {
             2 
             2 
             2 
-            `, Vaisseau, 0, -120)
+            `, Vaisseau, -10, -120)
         Tir_vaisseau.setPosition(Vaisseau.x - 2, Vaisseau.y - 10)
         Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
         Tir_vaisseau = sprites.createProjectileFromSprite(img`
@@ -152,7 +152,7 @@ game.onUpdateInterval(100, function () {
             2 
             2 
             2 
-            `, Vaisseau, 0, -120)
+            `, Vaisseau, 10, -120)
         Tir_vaisseau.setPosition(Vaisseau.x + 2, Vaisseau.y - 10)
         Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
     }
@@ -172,7 +172,7 @@ game.onUpdateInterval(100, function () {
             2 
             2 
             2 
-            `, Vaisseau, 0, -120)
+            `, Vaisseau, -10, -120)
         Tir_vaisseau.setPosition(Vaisseau.x - 2, Vaisseau.y - 10)
         Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
         Tir_vaisseau = sprites.createProjectileFromSprite(img`
@@ -181,7 +181,7 @@ game.onUpdateInterval(100, function () {
             2 
             2 
             2 
-            `, Vaisseau, 0, -120)
+            `, Vaisseau, 10, -120)
         Tir_vaisseau.setPosition(Vaisseau.x + 2, Vaisseau.y - 10)
         Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
     }
