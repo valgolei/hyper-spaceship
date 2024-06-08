@@ -2,10 +2,11 @@ namespace SpriteKind {
     export const tir_vaisseau = SpriteKind.create()
     export const tir_énemi = SpriteKind.create()
     export const titre = SpriteKind.create()
+    export const laser = SpriteKind.create()
 }
 statusbars.onStatusReached(StatusBarKind.Magic, statusbars.StatusComparison.EQ, statusbars.ComparisonType.Percentage, 100, function (status) {
     xp_points.value = 0
-    niveau_de_tir += 1
+    niveau_de_tir += 10
 })
 statusbars.onZero(StatusBarKind.EnemyHealth, function (status) {
     info.changeScoreBy(3)
@@ -23,31 +24,33 @@ sprites.onOverlap(SpriteKind.tir_énemi, SpriteKind.Player, function (sprite, ot
     Vie.value += -10
 })
 sprites.onOverlap(SpriteKind.tir_vaisseau, SpriteKind.Enemy, function (sprite, otherSprite) {
-    statusbars.getStatusBarAttachedTo(StatusBarKind.EnemyHealth, otherSprite).value += -5 - niveau_de_tir
+    statusbars.getStatusBarAttachedTo(StatusBarKind.EnemyHealth, otherSprite).value += -5
     sprites.destroy(sprite)
+})
+sprites.onOverlap(SpriteKind.laser, SpriteKind.Enemy, function (sprite, otherSprite) {
+    statusbars.getStatusBarAttachedTo(StatusBarKind.EnemyHealth, otherSprite).value += -5
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     otherSprite.y += -10
     Vie.value += -5
     statusbars.getStatusBarAttachedTo(StatusBarKind.EnemyHealth, otherSprite).value += -1
 })
-let Tir_vaisseau: Sprite = null
 let tir_énemi_basique: Sprite = null
 let vie_énemi_basique: StatusBarSprite = null
 let énemi_basique: Sprite = null
+let Tir_vaisseau: Sprite = null
 let énemis_restants = 0
 let xp_points: StatusBarSprite = null
 let Vie: StatusBarSprite = null
 let Vaisseau: Sprite = null
-let niveau_de_tir = 0
-niveau_de_tir = 1
+let niveau_de_tir = 100
 effects.starField.startScreenEffect()
 Vaisseau = sprites.create(img`
     . . . . . f . . . . . 
-    . . . f . f . f . . . 
-    . . . f 8 f 8 f . . . 
-    . . . f 8 6 8 f . . . 
-    . . . 8 6 6 6 8 . . . 
+    . . f . . f . . f . . 
+    . . f . 8 f 8 . f . . 
+    . . f 8 8 6 8 8 f . . 
+    . . 8 8 6 6 6 8 8 . . 
     . . 8 8 6 6 6 8 8 . . 
     . 8 8 6 6 6 6 6 8 8 . 
     . 8 8 6 6 6 6 6 8 8 . 
@@ -75,6 +78,154 @@ game.onUpdateInterval(1000, function () {
     for (let valeur of sprites.allOfKind(SpriteKind.Enemy)) {
         valeur.setVelocity(randint(-10, 10), randint(0, 3))
     }
+})
+forever(function () {
+    if (controller.up.isPressed()) {
+        animation.runImageAnimation(
+        Vaisseau,
+        [img`
+            . . . . . f . . . . . 
+            . . f . . f . . f . . 
+            . . f . 8 f 8 . f . . 
+            . . f 8 8 6 8 8 f . . 
+            . . 8 8 6 6 6 8 8 . . 
+            . . 8 8 6 6 6 8 8 . . 
+            . 8 8 6 6 6 6 6 8 8 . 
+            . 8 8 6 6 6 6 6 8 8 . 
+            8 8 8 8 8 f 8 8 8 8 8 
+            8 8 8 8 f f f 8 8 8 8 
+            8 . 8 8 8 f 8 8 8 . 8 
+            . . 8 . 8 8 8 . 8 . . 
+            . 8 2 8 . . . 8 2 8 . 
+            . 4 4 4 . . . 4 4 4 . 
+            5 5 5 5 5 . 5 5 5 5 5 
+            `],
+        500,
+        false
+        )
+    } else if (controller.down.isPressed()) {
+        animation.runImageAnimation(
+        Vaisseau,
+        [img`
+            . . . . . f . . . . . 
+            . . f . . f . . f . . 
+            . . f . 8 f 8 . f . . 
+            . . f 8 8 6 8 8 f . . 
+            . . 8 8 6 6 6 8 8 . . 
+            . . 8 8 6 6 6 8 8 . . 
+            . 8 8 6 6 6 6 6 8 8 . 
+            . 8 8 6 6 6 6 6 8 8 . 
+            8 8 8 8 8 f 8 8 8 8 8 
+            8 8 8 8 f f f 8 8 8 8 
+            8 . 8 8 8 f 8 8 8 . 8 
+            . . 8 . 8 8 8 . 8 . . 
+            . 8 . 8 . . . 8 . 8 . 
+            . . . . . . . . . . . 
+            . . . . . . . . . . . 
+            `],
+        500,
+        false
+        )
+    } else if (controller.left.isPressed()) {
+        animation.runImageAnimation(
+        Vaisseau,
+        [img`
+            . . . . . f . . . . . 
+            . . f . . f . . f . . 
+            . . f . 8 f 8 . f . . 
+            . . f 8 8 6 8 8 f . . 
+            . . 8 8 6 6 6 8 8 . . 
+            . . 8 8 6 6 6 8 8 . . 
+            . 8 8 6 6 6 6 6 8 8 . 
+            . 8 8 6 6 6 6 6 8 8 . 
+            8 8 8 8 8 f 8 8 8 8 8 
+            8 8 8 8 f f f 8 8 8 8 
+            8 . 8 8 8 f 8 8 8 . 8 
+            . . 8 . 8 8 8 . 8 . . 
+            . 8 2 8 . . . 8 2 8 . 
+            . . . . . . . 4 4 4 . 
+            . . . . . . 5 5 5 5 5 
+            `],
+        500,
+        false
+        )
+    } else if (controller.right.isPressed()) {
+        animation.runImageAnimation(
+        Vaisseau,
+        [img`
+            . . . . . f . . . . . 
+            . . f . . f . . f . . 
+            . . f . 8 f 8 . f . . 
+            . . f 8 8 6 8 8 f . . 
+            . . 8 8 6 6 6 8 8 . . 
+            . . 8 8 6 6 6 8 8 . . 
+            . 8 8 6 6 6 6 6 8 8 . 
+            . 8 8 6 6 6 6 6 8 8 . 
+            8 8 8 8 8 f 8 8 8 8 8 
+            8 8 8 8 f f f 8 8 8 8 
+            8 . 8 8 8 f 8 8 8 . 8 
+            . . 8 . 8 8 8 . 8 . . 
+            . 8 2 8 . . . 8 2 8 . 
+            . 4 4 4 . . . . . . . 
+            5 5 5 5 5 . . . . . . 
+            `],
+        500,
+        false
+        )
+    } else {
+        animation.runImageAnimation(
+        Vaisseau,
+        [img`
+            . . . . . f . . . . . 
+            . . f . . f . . f . . 
+            . . f . 8 f 8 . f . . 
+            . . f 8 8 6 8 8 f . . 
+            . . 8 8 6 6 6 8 8 . . 
+            . . 8 8 6 6 6 8 8 . . 
+            . 8 8 6 6 6 6 6 8 8 . 
+            . 8 8 6 6 6 6 6 8 8 . 
+            8 8 8 8 8 f 8 8 8 8 8 
+            8 8 8 8 f f f 8 8 8 8 
+            8 . 8 8 8 f 8 8 8 . 8 
+            . . 8 . 8 8 8 . 8 . . 
+            . 8 2 8 . . . 8 2 8 . 
+            . . . . . . . . . . . 
+            . . . . . . . . . . . 
+            `],
+        500,
+        false
+        )
+    }
+})
+forever(function () {
+    pause(12000 / niveau_de_tir)
+    Tir_vaisseau = sprites.createProjectileFromSprite(img`
+        2 
+        2 
+        2 
+        2 
+        2 
+        `, Vaisseau, 0, 0 - niveau_de_tir)
+    Tir_vaisseau.setPosition(Vaisseau.x, Vaisseau.y - 9)
+    Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
+    Tir_vaisseau = sprites.createProjectileFromSprite(img`
+        2 
+        2 
+        2 
+        2 
+        2 
+        `, Vaisseau, 0, 0 - niveau_de_tir)
+    Tir_vaisseau.setPosition(Vaisseau.x - 3, Vaisseau.y - 8)
+    Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
+    Tir_vaisseau = sprites.createProjectileFromSprite(img`
+        2 
+        2 
+        2 
+        2 
+        2 
+        `, Vaisseau, 0, 0 - niveau_de_tir)
+    Tir_vaisseau.setPosition(Vaisseau.x + 3, Vaisseau.y - 8)
+    Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
 })
 forever(function () {
     if (spaw_des_énemis_basiques > 6000 / (1 + info.score() / 100)) {
@@ -125,66 +276,7 @@ forever(function () {
     }
 })
 game.onUpdateInterval(100, function () {
-    if (niveau_de_tir == 1) {
-        Tir_vaisseau = sprites.createProjectileFromSprite(img`
-            2 
-            2 
-            2 
-            2 
-            2 
-            `, Vaisseau, 0, -120)
-        Tir_vaisseau.setPosition(Vaisseau.x, Vaisseau.y - 11)
-        Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
-    }
-    if (niveau_de_tir == 2) {
-        Tir_vaisseau = sprites.createProjectileFromSprite(img`
-            2 
-            2 
-            2 
-            2 
-            2 
-            `, Vaisseau, -10, -120)
-        Tir_vaisseau.setPosition(Vaisseau.x - 2, Vaisseau.y - 10)
-        Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
-        Tir_vaisseau = sprites.createProjectileFromSprite(img`
-            2 
-            2 
-            2 
-            2 
-            2 
-            `, Vaisseau, 10, -120)
-        Tir_vaisseau.setPosition(Vaisseau.x + 2, Vaisseau.y - 10)
-        Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
-    }
-    if (niveau_de_tir >= 3) {
-        Tir_vaisseau = sprites.createProjectileFromSprite(img`
-            2 
-            2 
-            2 
-            2 
-            2 
-            `, Vaisseau, 0, -120)
-        Tir_vaisseau.setPosition(Vaisseau.x, Vaisseau.y - 11)
-        Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
-        Tir_vaisseau = sprites.createProjectileFromSprite(img`
-            2 
-            2 
-            2 
-            2 
-            2 
-            `, Vaisseau, -10, -120)
-        Tir_vaisseau.setPosition(Vaisseau.x - 2, Vaisseau.y - 10)
-        Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
-        Tir_vaisseau = sprites.createProjectileFromSprite(img`
-            2 
-            2 
-            2 
-            2 
-            2 
-            `, Vaisseau, 10, -120)
-        Tir_vaisseau.setPosition(Vaisseau.x + 2, Vaisseau.y - 10)
-        Tir_vaisseau.setKind(SpriteKind.tir_vaisseau)
-    }
+	
 })
 game.onUpdateInterval(100, function () {
     spaw_des_énemis_basiques += 100
